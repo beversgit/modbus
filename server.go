@@ -279,6 +279,13 @@ func (ms *ModbusServer) Stop() (err error) {
 	return
 }
 
+// Gets the number of connected TCP clients
+func (ms *ModbusServer) GetTcpClients() int {
+	ms.lock.Lock()
+	defer ms.lock.Unlock()
+	return len(ms.tcpClients)
+}
+
 // Accepts new client connections if the configured connection limit allows it.
 // Each connection is served from a dedicated goroutine to allow for concurrent
 // connections.
